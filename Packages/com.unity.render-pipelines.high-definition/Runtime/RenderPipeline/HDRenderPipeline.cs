@@ -1909,16 +1909,24 @@ namespace UnityEngine.Rendering.HighDefinition
                                 cmd.Clear();
                             }
 
+							// still bind normal history in case renderOnlyAOVs gets disabled by user
                             // We are now going to render the main camera, so bind the correct HistoryRTHandleSystem (in case we previously render an AOV)
                             renderRequest.hdCamera.BindHistoryRTHandleSystem(cameraHistory);
 
-                            using (new ProfilingScope(cmd, renderRequest.hdCamera.profilingSampler))
-                            {
-                                cmd.SetInvertCulling(renderRequest.cameraSettings.invertFaceCulling);
-                                ExecuteRenderRequest(renderRequest, renderContext, cmd, AOVRequestData.defaultAOVRequestDataNonAlloc);
-                                cmd.SetInvertCulling(false);
-                            }
-
+							Camera cam = renderRequest.hdCamera.camera;
+							
+							// if camera has no additional camera data or renderOnlyAOVs is false
+							if (!cam.TryGetComponent(out HDAdditionalCameraData hdData) ||
+								!hdData.renderOnlyAOVs)
+							{
+								using (new ProfilingScope(cmd, renderRequest.hdCamera.profilingSampler))
+								{
+									cmd.SetInvertCulling(renderRequest.cameraSettings.invertFaceCulling);
+									ExecuteRenderRequest(renderRequest, renderContext, cmd, AOVRequestData.defaultAOVRequestDataNonAlloc);
+									cmd.SetInvertCulling(false);
+								}
+							}
+							
                             //  EndCameraRendering callback should be executed outside of any profiling scope in case user code submits the renderContext
                             EndCameraRendering(renderContext, renderRequest.hdCamera.camera);
 

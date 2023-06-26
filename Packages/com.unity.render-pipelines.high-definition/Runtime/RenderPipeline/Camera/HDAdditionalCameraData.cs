@@ -467,6 +467,12 @@ namespace UnityEngine.Rendering.HighDefinition
 
         [ExcludeCopy]
         AOVRequestDataCollection m_AOVRequestDataCollection = new AOVRequestDataCollection(null);
+		
+		/// <summary>
+		/// If this camera should only render AOVs that have been set on it.
+		/// It will not render anything else if true.
+		/// </summary>
+		public bool renderOnlyAOVs = false;
 
         /// <summary>Set AOV requests to use.</summary>
         /// <param name="aovRequests">Describes the requests to execute.</param>
