@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
+### Changed
+- Added functionality for rendering only the AOVs that are set on a camera without also rendering the full render graph. (See HDAdditionalCameraData.renderOnlyAOVs)
+
 ## [12.1.11] - 2023-05-23
 
 This version is compatible with Unity 2021.3.27f1.
@@ -3489,3 +3492,4 @@ This version is compatible with Unity 2021.2.14f1.
 - Fix decal atlas debug view to work correctly when shadow atlas view is also enabled
 - Fix TransparentSSR with non-rendergraph.
 - Fix shader compilation warning on SSR compute shader.
+
